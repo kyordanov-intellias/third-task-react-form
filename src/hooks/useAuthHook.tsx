@@ -1,34 +1,22 @@
-import { useState, useEffect } from "react";
-
-interface User {
-  username: string;
-  email: string;
-}
+import { useState } from "react";
+import { User } from "../interfaces/formInterface";
 
 const useAuthHook = () => {
   const [user, setUser] = useState<User | null>(null);
 
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-  }, []);
-
   const login = (userData: User): void => {
-    localStorage.setItem("user", JSON.stringify(userData));
     setUser(userData);
+    console.log(`User Logged In`);
   };
 
-  const register = (user: User): void => {
-    setUser(user);
-    console.log(`User Registrated`);
+  const register = (userData: User): void => {
+    setUser(userData);
+    console.log(`User Registered`);
   };
 
-  const logout = (user: User | null): void => {
+  const logout = (): void => {
     console.log(`${user?.username} logged out`);
     setUser(null);
-    localStorage.removeItem("user");
   };
 
   return { user, login, register, logout };

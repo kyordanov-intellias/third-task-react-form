@@ -1,25 +1,21 @@
-import { useState, ChangeEvent, useEffect } from "react";
 import FormComponent from "../components/Form.component";
-import { InputField, SignInInterface } from "../interfaces/formInterface";
+import { SignInDataInterface, SignInViewProps } from "../interfaces/formInterface";
 import "./SignView.styles.css";
+import { useFormFields } from "../hooks/useFormFields";
 
-const SignInView = () => {
-  const [signInFields, setSignInFields] = useState<InputField[]>([]);
-  const [formData, setFormData] = useState<SignInInterface>({
-    username: "",
-    password: "",
-  });
+const initialState: SignInDataInterface = {
+  username: "",
+  password: "",
+};
 
-  useEffect(() => {
-    setSignInFields(Object.keys(formData).map((key) => ({ name: key })));
-  }, [formData]);
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+const SignInView = ({ login }: SignInViewProps) => {
+  const { fields, formData, handleChange } = useFormFields<SignInDataInterface>(initialState);
 
   const handleSubmit = () => {
-    console.log("Signing In", formData);
+    login({ 
+      username: formData.username,
+      email: formData.username
+    });
   };
 
   return (
@@ -27,7 +23,7 @@ const SignInView = () => {
       <h1 className="sign-title">Sign In</h1>
       <FormComponent
         formData={formData}
-        fields={signInFields}
+        fields={fields}
         onDataChange={handleChange}
         onSubmit={handleSubmit}
       />

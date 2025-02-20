@@ -1,7 +1,7 @@
 import { ChangeEvent } from "react";
 
 // Form in general
-export interface FormInterface<T extends Record<string, unknown>> {
+export interface FormInterface<T extends Record<string, string>> {
   formData: T;
   fields: InputField[];
   onDataChange: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -9,7 +9,7 @@ export interface FormInterface<T extends Record<string, unknown>> {
 }
 
 // Input
-export interface InputProps<T extends Record<string, unknown>> {
+export interface InputProps<T extends Record<string, string>> {
   inputName: string;
   value: T[keyof T];
   onDataChange: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -19,10 +19,14 @@ export interface InputField {
   name: string;
 }
 
-// Extended Form Interfaces
-export interface SignInInterface {
+export interface SignInDataInterface {
   username: string;
   password: string;
+  [key: string]: string; 
+}
+
+export interface SignInViewProps {
+  login: (userData: { username: string; email: string }) => void;
 }
 
 export interface SignUpInterface {
@@ -30,17 +34,15 @@ export interface SignUpInterface {
   email: string;
   password: string;
   confirmPassword: string;
+  [key: string]: string; 
 }
 
-export interface CreateInterface {
-  name: string;
-  imageURL: string;
-  quantity: string | number;
-  price: string | number;
+export interface SignUpViewProps {
+  register: (userDate: { username: string, email: string, password: string, confirmPassword: string }) => void;
 }
 
-export interface ContactInterface {
-  nameOfClient: string;
-  message: string;
-  age: number | string;
+
+export interface User {
+  username: string;
+  email: string;
 }

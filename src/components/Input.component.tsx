@@ -1,18 +1,21 @@
 import { InputProps } from "../interfaces/formInterface";
+import { useFormFields } from "../hooks/useFormFields";
 import "./Input.styles.css";
 
-const InputComponent = <T extends Record<string, any>>({
+const InputComponent = <T extends Record<string, string>>({
   inputName,
   value,
   onDataChange,
 }: InputProps<T>) => {
+  const { getInputType, getIcon } = useFormFields<T>(null);
+
   return (
     <>
       <label htmlFor={inputName} className="input-label">
-        Enter {inputName}
+        {getIcon(inputName)} {inputName}
       </label>
       <input
-        type="text"
+        type={getInputType(inputName)}
         name={inputName}
         id={inputName}
         onChange={onDataChange}

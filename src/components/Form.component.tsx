@@ -2,7 +2,7 @@ import InputComponent from "./Input.component";
 import { FormInterface } from "../interfaces/formInterface"; // Import the interface
 import "./Form.styles.css";
 
-const FormComponent = <T extends Record<string, any>>({
+const FormComponent = <T extends Record<string, string>>({
   formData,
   fields,
   onDataChange,
@@ -20,7 +20,7 @@ const FormComponent = <T extends Record<string, any>>({
         <InputComponent
           key={field.name}
           inputName={field.name}
-          value={(formData as Record<string, any>)[field.name] ?? ""}
+          value={(formData as Record<string, string>)[field.name] ?? ""}
           onDataChange={onDataChange}
         />
       ))}

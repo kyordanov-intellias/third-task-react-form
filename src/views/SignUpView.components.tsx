@@ -1,34 +1,20 @@
-import { useState, ChangeEvent, useEffect } from "react";
 import FormComponent from "../components/Form.component";
-import { InputField, SignUpInterface } from "../interfaces/formInterface";
+import { SignUpInterface, SignUpViewProps } from "../interfaces/formInterface";
 import "./SignView.styles.css";
-import useAuthHook from "../hooks/useAuthHook";
+import { useFormFields } from "../hooks/useFormFields";
 
-const SignUpView = () => {
-  const [signUpFields, setSignUpFields] = useState<InputField[]>([]);
-  const { register, user } = useAuthHook();
+const initialState: SignUpInterface = {
+  username: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
 
-  const [formData, setFormData] = useState<SignUpInterface>({
-    username: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-
-  useEffect(() => {
-    const fieldsArray: InputField[] = Object.keys(formData).map((key) => ({
-      name: key,
-    }));
-    setSignUpFields(fieldsArray);
-  }, [formData]);
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+const SignUpView = ({ register }: SignUpViewProps) => {
+  const { fields, formData, handleChange } = useFormFields<SignUpInterface>(initialState);
 
   const handleSubmit = async () => {
     register(formData);
-    console.log(user);
   };
 
   return (
@@ -36,7 +22,7 @@ const SignUpView = () => {
       <h1 className="sign-title">Sign Up</h1>
       <FormComponent
         formData={formData}
-        fields={signUpFields}
+        fields={fields}
         onDataChange={handleChange}
         onSubmit={handleSubmit}
       />
