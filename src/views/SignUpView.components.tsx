@@ -1,9 +1,13 @@
 import { useState, ChangeEvent, useEffect } from "react";
 import FormComponent from "../components/Form.component";
 import { InputField, SignUpInterface } from "../interfaces/formInterface";
+import "./SignView.styles.css";
+import useAuthHook from "../hooks/useAuthHook";
 
 const SignUpView = () => {
   const [signUpFields, setSignUpFields] = useState<InputField[]>([]);
+  const { register, user } = useAuthHook();
+
   const [formData, setFormData] = useState<SignUpInterface>({
     username: "",
     email: "",
@@ -22,17 +26,21 @@ const SignUpView = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = () => {
-    console.log("Signing Up", formData);
+  const handleSubmit = async () => {
+    register(formData);
+    console.log(user);
   };
 
   return (
-    <FormComponent
-      formData={formData}
-      fields={signUpFields}
-      onDataChange={handleChange}
-      onSubmit={handleSubmit}
-    />
+    <div className="sign-container">
+      <h1 className="sign-title">Sign Up</h1>
+      <FormComponent
+        formData={formData}
+        fields={signUpFields}
+        onDataChange={handleChange}
+        onSubmit={handleSubmit}
+      />
+    </div>
   );
 };
 

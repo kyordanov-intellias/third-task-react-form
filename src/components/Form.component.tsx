@@ -1,5 +1,6 @@
 import InputComponent from "./Input.component";
 import { FormInterface } from "../interfaces/formInterface"; // Import the interface
+import "./Form.styles.css";
 
 const FormComponent = <T extends Record<string, any>>({
   formData,
@@ -13,6 +14,7 @@ const FormComponent = <T extends Record<string, any>>({
         e.preventDefault();
         onSubmit();
       }}
+      className="form-container"
     >
       {fields.map((field) => (
         <InputComponent
@@ -22,7 +24,9 @@ const FormComponent = <T extends Record<string, any>>({
           onDataChange={onDataChange}
         />
       ))}
-      <button type="submit">Submit</button>
+      <button className="submit-button" type="submit">
+        Submit
+      </button>
     </form>
   );
 };

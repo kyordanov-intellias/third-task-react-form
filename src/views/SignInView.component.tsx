@@ -1,6 +1,7 @@
 import { useState, ChangeEvent, useEffect } from "react";
 import FormComponent from "../components/Form.component";
 import { InputField, SignInInterface } from "../interfaces/formInterface";
+import "./SignView.styles.css";
 
 const SignInView = () => {
   const [signInFields, setSignInFields] = useState<InputField[]>([]);
@@ -22,12 +23,15 @@ const SignInView = () => {
   };
 
   return (
-    <FormComponent
-      formData={formData}
-      fields={signInFields}
-      onDataChange={handleChange}
-      onSubmit={handleSubmit}
-    />
+    <div className="sign-container">
+      <h1 className="sign-title">Sign In</h1>
+      <FormComponent
+        formData={formData}
+        fields={signInFields}
+        onDataChange={handleChange}
+        onSubmit={handleSubmit}
+      />
+    </div>
   );
 };
 
